@@ -1,0 +1,421 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FACSHAREDModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="FACSHAREDModelStoreContainer">
+          <EntitySet Name="fac_archivo" EntityType="FACSHAREDModel.Store.fac_archivo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="fac_autorizacion" EntityType="FACSHAREDModel.Store.fac_autorizacion" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="fac_comentario" EntityType="FACSHAREDModel.Store.fac_comentario" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="fac_hastags" EntityType="FACSHAREDModel.Store.fac_hastags" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="fac_persona" EntityType="FACSHAREDModel.Store.fac_persona" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="fac_ranking" EntityType="FACSHAREDModel.Store.fac_ranking" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__fac_autor__t_ida__1273C1CD" Association="FACSHAREDModel.Store.FK__fac_autor__t_ida__1273C1CD">
+            <End Role="fac_archivo" EntitySet="fac_archivo" />
+            <End Role="fac_autorizacion" EntitySet="fac_autorizacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__fac_autor__t_usu__1367E606" Association="FACSHAREDModel.Store.FK__fac_autor__t_usu__1367E606">
+            <End Role="fac_persona" EntitySet="fac_persona" />
+            <End Role="fac_autorizacion" EntitySet="fac_autorizacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__fac_hasta__h_ida__117F9D94" Association="FACSHAREDModel.Store.FK__fac_hasta__h_ida__117F9D94">
+            <End Role="fac_archivo" EntitySet="fac_archivo" />
+            <End Role="fac_hastags" EntitySet="fac_hastags" />
+          </AssociationSet>
+          <AssociationSet Name="FK__fac_ranki__r_usu__108B795B" Association="FACSHAREDModel.Store.FK__fac_ranki__r_usu__108B795B">
+            <End Role="fac_persona" EntitySet="fac_persona" />
+            <End Role="fac_ranking" EntitySet="fac_ranking" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="fac_archivo">
+          <Key>
+            <PropertyRef Name="a_idarchivo" />
+          </Key>
+          <Property Name="a_idarchivo" Type="nvarchar" Nullable="false" MaxLength="40" />
+          <Property Name="a_nombre_archivo" Type="nvarchar" MaxLength="512" />
+          <Property Name="a_tipo_archivo" Type="nvarchar" MaxLength="128" />
+          <Property Name="a_tamaño" Type="numeric" Precision="22" Scale="2" />
+          <Property Name="a_usuario" Type="nvarchar(max)" />
+          <Property Name="a_link" Type="nvarchar" MaxLength="256" />
+          <Property Name="a_detalle" Type="nvarchar" MaxLength="512" />
+          <Property Name="a_archivo_b" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="fac_autorizacion">
+          <Key>
+            <PropertyRef Name="t_idarchivo" />
+            <PropertyRef Name="t_usuario" />
+            <PropertyRef Name="t_tipo" />
+          </Key>
+          <Property Name="t_idarchivo" Type="nvarchar" Nullable="false" MaxLength="40" />
+          <Property Name="t_usuario" Type="nvarchar" Nullable="false" MaxLength="64" />
+          <Property Name="t_tipo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fac_comentario">
+          <Key>
+            <PropertyRef Name="c_idarchivo" />
+            <PropertyRef Name="c_usuario" />
+            <PropertyRef Name="c_texto" />
+            <PropertyRef Name="c_estado" />
+          </Key>
+          <Property Name="c_idarchivo" Type="nvarchar" Nullable="false" MaxLength="40" />
+          <Property Name="c_usuario" Type="nvarchar" Nullable="false" MaxLength="64" />
+          <Property Name="c_texto" Type="varchar" Nullable="false" MaxLength="1024" />
+          <Property Name="c_estado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fac_hastags">
+          <Key>
+            <PropertyRef Name="h_idarchivo" />
+          </Key>
+          <Property Name="h_idarchivo" Type="nvarchar" Nullable="false" MaxLength="40" />
+          <Property Name="h_descripcion" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fac_persona">
+          <Key>
+            <PropertyRef Name="p_usuario" />
+          </Key>
+          <Property Name="p_usuario" Type="nvarchar" Nullable="false" MaxLength="64" />
+          <Property Name="p_primer_nombre" Type="varchar" MaxLength="64" />
+          <Property Name="p_segundo_nombre" Type="varchar" MaxLength="64" />
+          <Property Name="p_primer_apellido" Type="varchar" MaxLength="64" />
+          <Property Name="p_segundo_apellido" Type="varchar" MaxLength="64" />
+          <Property Name="p_password" Type="varchar" MaxLength="128" />
+          <Property Name="p_correo" Type="varchar" MaxLength="96" />
+          <Property Name="p_fecha_crea" Type="date" />
+          <Property Name="p_estado" Type="int" />
+        </EntityType>
+        <EntityType Name="fac_ranking">
+          <Key>
+            <PropertyRef Name="r_objetivo" />
+            <PropertyRef Name="r_usuario" />
+          </Key>
+          <Property Name="r_objetivo" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="r_usuario" Type="nvarchar" Nullable="false" MaxLength="64" />
+          <Property Name="r_ranking" Type="int" />
+          <Property Name="r_tipo" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <Association Name="FK__fac_autor__t_ida__1273C1CD">
+          <End Role="fac_archivo" Type="FACSHAREDModel.Store.fac_archivo" Multiplicity="1" />
+          <End Role="fac_autorizacion" Type="FACSHAREDModel.Store.fac_autorizacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fac_archivo">
+              <PropertyRef Name="a_idarchivo" />
+            </Principal>
+            <Dependent Role="fac_autorizacion">
+              <PropertyRef Name="t_idarchivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__fac_autor__t_usu__1367E606">
+          <End Role="fac_persona" Type="FACSHAREDModel.Store.fac_persona" Multiplicity="1" />
+          <End Role="fac_autorizacion" Type="FACSHAREDModel.Store.fac_autorizacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fac_persona">
+              <PropertyRef Name="p_usuario" />
+            </Principal>
+            <Dependent Role="fac_autorizacion">
+              <PropertyRef Name="t_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__fac_hasta__h_ida__117F9D94">
+          <End Role="fac_archivo" Type="FACSHAREDModel.Store.fac_archivo" Multiplicity="1" />
+          <End Role="fac_hastags" Type="FACSHAREDModel.Store.fac_hastags" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="fac_archivo">
+              <PropertyRef Name="a_idarchivo" />
+            </Principal>
+            <Dependent Role="fac_hastags">
+              <PropertyRef Name="h_idarchivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__fac_ranki__r_usu__108B795B">
+          <End Role="fac_persona" Type="FACSHAREDModel.Store.fac_persona" Multiplicity="1" />
+          <End Role="fac_ranking" Type="FACSHAREDModel.Store.fac_ranking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fac_persona">
+              <PropertyRef Name="p_usuario" />
+            </Principal>
+            <Dependent Role="fac_ranking">
+              <PropertyRef Name="r_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FACSHAREDModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="FACSHAREDEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="fac_archivo" EntityType="FACSHAREDModel.fac_archivo" />
+          <EntitySet Name="fac_autorizacion" EntityType="FACSHAREDModel.fac_autorizacion" />
+          <EntitySet Name="fac_comentario" EntityType="FACSHAREDModel.fac_comentario" />
+          <EntitySet Name="fac_hastags" EntityType="FACSHAREDModel.fac_hastags" />
+          <EntitySet Name="fac_persona" EntityType="FACSHAREDModel.fac_persona" />
+          <EntitySet Name="fac_ranking" EntityType="FACSHAREDModel.fac_ranking" />
+          <AssociationSet Name="FK__fac_autor__t_ida__1273C1CD" Association="FACSHAREDModel.FK__fac_autor__t_ida__1273C1CD">
+            <End Role="fac_archivo" EntitySet="fac_archivo" />
+            <End Role="fac_autorizacion" EntitySet="fac_autorizacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__fac_hasta__h_ida__117F9D94" Association="FACSHAREDModel.FK__fac_hasta__h_ida__117F9D94">
+            <End Role="fac_archivo" EntitySet="fac_archivo" />
+            <End Role="fac_hastags" EntitySet="fac_hastags" />
+          </AssociationSet>
+          <AssociationSet Name="FK__fac_autor__t_usu__1367E606" Association="FACSHAREDModel.FK__fac_autor__t_usu__1367E606">
+            <End Role="fac_persona" EntitySet="fac_persona" />
+            <End Role="fac_autorizacion" EntitySet="fac_autorizacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__fac_ranki__r_usu__108B795B" Association="FACSHAREDModel.FK__fac_ranki__r_usu__108B795B">
+            <End Role="fac_persona" EntitySet="fac_persona" />
+            <End Role="fac_ranking" EntitySet="fac_ranking" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="fac_archivo">
+          <Key>
+            <PropertyRef Name="a_idarchivo" />
+          </Key>
+          <Property Name="a_idarchivo" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+          <Property Name="a_nombre_archivo" Type="String" MaxLength="512" Unicode="true" FixedLength="false" />
+          <Property Name="a_tipo_archivo" Type="String" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="a_tamaño" Type="Decimal" Precision="22" Scale="2" />
+          <Property Name="a_usuario" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="a_link" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="a_detalle" Type="String" MaxLength="512" Unicode="true" FixedLength="false" />
+          <Property Name="a_archivo_b" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="fac_autorizacion" Relationship="FACSHAREDModel.FK__fac_autor__t_ida__1273C1CD" FromRole="fac_archivo" ToRole="fac_autorizacion" />
+          <NavigationProperty Name="fac_hastags" Relationship="FACSHAREDModel.FK__fac_hasta__h_ida__117F9D94" FromRole="fac_archivo" ToRole="fac_hastags" />
+        </EntityType>
+        <EntityType Name="fac_autorizacion">
+          <Key>
+            <PropertyRef Name="t_idarchivo" />
+            <PropertyRef Name="t_usuario" />
+            <PropertyRef Name="t_tipo" />
+          </Key>
+          <Property Name="t_idarchivo" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+          <Property Name="t_usuario" Type="String" Nullable="false" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="t_tipo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="fac_archivo" Relationship="FACSHAREDModel.FK__fac_autor__t_ida__1273C1CD" FromRole="fac_autorizacion" ToRole="fac_archivo" />
+          <NavigationProperty Name="fac_persona" Relationship="FACSHAREDModel.FK__fac_autor__t_usu__1367E606" FromRole="fac_autorizacion" ToRole="fac_persona" />
+        </EntityType>
+        <EntityType Name="fac_comentario">
+          <Key>
+            <PropertyRef Name="c_idarchivo" />
+            <PropertyRef Name="c_usuario" />
+            <PropertyRef Name="c_texto" />
+            <PropertyRef Name="c_estado" />
+          </Key>
+          <Property Name="c_idarchivo" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+          <Property Name="c_usuario" Type="String" Nullable="false" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="c_texto" Type="String" Nullable="false" MaxLength="1024" Unicode="false" FixedLength="false" />
+          <Property Name="c_estado" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fac_hastags">
+          <Key>
+            <PropertyRef Name="h_idarchivo" />
+          </Key>
+          <Property Name="h_idarchivo" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+          <Property Name="h_descripcion" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="fac_archivo" Relationship="FACSHAREDModel.FK__fac_hasta__h_ida__117F9D94" FromRole="fac_hastags" ToRole="fac_archivo" />
+        </EntityType>
+        <EntityType Name="fac_persona">
+          <Key>
+            <PropertyRef Name="p_usuario" />
+          </Key>
+          <Property Name="p_usuario" Type="String" Nullable="false" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="p_primer_nombre" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="p_segundo_nombre" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="p_primer_apellido" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="p_segundo_apellido" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="p_password" Type="String" MaxLength="128" Unicode="false" FixedLength="false" />
+          <Property Name="p_correo" Type="String" MaxLength="96" Unicode="false" FixedLength="false" />
+          <Property Name="p_fecha_crea" Type="DateTime" />
+          <Property Name="p_estado" Type="Int32" />
+          <NavigationProperty Name="fac_autorizacion" Relationship="FACSHAREDModel.FK__fac_autor__t_usu__1367E606" FromRole="fac_persona" ToRole="fac_autorizacion" />
+          <NavigationProperty Name="fac_ranking" Relationship="FACSHAREDModel.FK__fac_ranki__r_usu__108B795B" FromRole="fac_persona" ToRole="fac_ranking" />
+        </EntityType>
+        <EntityType Name="fac_ranking">
+          <Key>
+            <PropertyRef Name="r_objetivo" />
+            <PropertyRef Name="r_usuario" />
+          </Key>
+          <Property Name="r_objetivo" Type="String" Nullable="false" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="r_usuario" Type="String" Nullable="false" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="r_ranking" Type="Int32" />
+          <Property Name="r_tipo" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="fac_persona" Relationship="FACSHAREDModel.FK__fac_ranki__r_usu__108B795B" FromRole="fac_ranking" ToRole="fac_persona" />
+        </EntityType>
+        <Association Name="FK__fac_autor__t_ida__1273C1CD">
+          <End Role="fac_archivo" Type="FACSHAREDModel.fac_archivo" Multiplicity="1" />
+          <End Role="fac_autorizacion" Type="FACSHAREDModel.fac_autorizacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fac_archivo">
+              <PropertyRef Name="a_idarchivo" />
+            </Principal>
+            <Dependent Role="fac_autorizacion">
+              <PropertyRef Name="t_idarchivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__fac_hasta__h_ida__117F9D94">
+          <End Role="fac_archivo" Type="FACSHAREDModel.fac_archivo" Multiplicity="1" />
+          <End Role="fac_hastags" Type="FACSHAREDModel.fac_hastags" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="fac_archivo">
+              <PropertyRef Name="a_idarchivo" />
+            </Principal>
+            <Dependent Role="fac_hastags">
+              <PropertyRef Name="h_idarchivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__fac_autor__t_usu__1367E606">
+          <End Role="fac_persona" Type="FACSHAREDModel.fac_persona" Multiplicity="1" />
+          <End Role="fac_autorizacion" Type="FACSHAREDModel.fac_autorizacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fac_persona">
+              <PropertyRef Name="p_usuario" />
+            </Principal>
+            <Dependent Role="fac_autorizacion">
+              <PropertyRef Name="t_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__fac_ranki__r_usu__108B795B">
+          <End Role="fac_persona" Type="FACSHAREDModel.fac_persona" Multiplicity="1" />
+          <End Role="fac_ranking" Type="FACSHAREDModel.fac_ranking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fac_persona">
+              <PropertyRef Name="p_usuario" />
+            </Principal>
+            <Dependent Role="fac_ranking">
+              <PropertyRef Name="r_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FACSHAREDModelStoreContainer" CdmEntityContainer="FACSHAREDEntities">
+          <EntitySetMapping Name="fac_archivo">
+            <EntityTypeMapping TypeName="FACSHAREDModel.fac_archivo">
+              <MappingFragment StoreEntitySet="fac_archivo">
+                <ScalarProperty Name="a_idarchivo" ColumnName="a_idarchivo" />
+                <ScalarProperty Name="a_nombre_archivo" ColumnName="a_nombre_archivo" />
+                <ScalarProperty Name="a_tipo_archivo" ColumnName="a_tipo_archivo" />
+                <ScalarProperty Name="a_tamaño" ColumnName="a_tamaño" />
+                <ScalarProperty Name="a_usuario" ColumnName="a_usuario" />
+                <ScalarProperty Name="a_link" ColumnName="a_link" />
+                <ScalarProperty Name="a_detalle" ColumnName="a_detalle" />
+                <ScalarProperty Name="a_archivo_b" ColumnName="a_archivo_b" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fac_autorizacion">
+            <EntityTypeMapping TypeName="FACSHAREDModel.fac_autorizacion">
+              <MappingFragment StoreEntitySet="fac_autorizacion">
+                <ScalarProperty Name="t_idarchivo" ColumnName="t_idarchivo" />
+                <ScalarProperty Name="t_usuario" ColumnName="t_usuario" />
+                <ScalarProperty Name="t_tipo" ColumnName="t_tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fac_comentario">
+            <EntityTypeMapping TypeName="FACSHAREDModel.fac_comentario">
+              <MappingFragment StoreEntitySet="fac_comentario">
+                <ScalarProperty Name="c_idarchivo" ColumnName="c_idarchivo" />
+                <ScalarProperty Name="c_usuario" ColumnName="c_usuario" />
+                <ScalarProperty Name="c_texto" ColumnName="c_texto" />
+                <ScalarProperty Name="c_estado" ColumnName="c_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fac_hastags">
+            <EntityTypeMapping TypeName="FACSHAREDModel.fac_hastags">
+              <MappingFragment StoreEntitySet="fac_hastags">
+                <ScalarProperty Name="h_idarchivo" ColumnName="h_idarchivo" />
+                <ScalarProperty Name="h_descripcion" ColumnName="h_descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fac_persona">
+            <EntityTypeMapping TypeName="FACSHAREDModel.fac_persona">
+              <MappingFragment StoreEntitySet="fac_persona">
+                <ScalarProperty Name="p_usuario" ColumnName="p_usuario" />
+                <ScalarProperty Name="p_primer_nombre" ColumnName="p_primer_nombre" />
+                <ScalarProperty Name="p_segundo_nombre" ColumnName="p_segundo_nombre" />
+                <ScalarProperty Name="p_primer_apellido" ColumnName="p_primer_apellido" />
+                <ScalarProperty Name="p_segundo_apellido" ColumnName="p_segundo_apellido" />
+                <ScalarProperty Name="p_password" ColumnName="p_password" />
+                <ScalarProperty Name="p_correo" ColumnName="p_correo" />
+                <ScalarProperty Name="p_fecha_crea" ColumnName="p_fecha_crea" />
+                <ScalarProperty Name="p_estado" ColumnName="p_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fac_ranking">
+            <EntityTypeMapping TypeName="FACSHAREDModel.fac_ranking">
+              <MappingFragment StoreEntitySet="fac_ranking">
+                <ScalarProperty Name="r_objetivo" ColumnName="r_objetivo" />
+                <ScalarProperty Name="r_usuario" ColumnName="r_usuario" />
+                <ScalarProperty Name="r_ranking" ColumnName="r_ranking" />
+                <ScalarProperty Name="r_tipo" ColumnName="r_tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="bd">
+        <EntityTypeShape EntityType="FACSHAREDModel.fac_archivo" Width="1.5" PointX="0.75" PointY="7" Height="2.9417936197916665" IsExpanded="true" />
+        <EntityTypeShape EntityType="FACSHAREDModel.fac_autorizacion" Width="1.5" PointX="3" PointY="2.375" Height="1.9802864583333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="FACSHAREDModel.fac_comentario" Width="1.5" PointX="5.75" PointY="0.75" Height="1.7879850260416665" IsExpanded="true" />
+        <EntityTypeShape EntityType="FACSHAREDModel.fac_hastags" Width="1.5" PointX="3" PointY="8.625" Height="1.5956835937499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="FACSHAREDModel.fac_persona" Width="1.5" PointX="0.75" PointY="1.875" Height="3.1340950520833331" IsExpanded="true" />
+        <EntityTypeShape EntityType="FACSHAREDModel.fac_ranking" Width="1.5" PointX="3" PointY="5.125" Height="1.9802864583333317" IsExpanded="true" />
+        <AssociationConnector Association="FACSHAREDModel.FK__fac_autor__t_ida__1273C1CD" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="7" />
+          <ConnectorPoint PointX="2.625" PointY="6.625" />
+          <ConnectorPoint PointX="2.625" PointY="3.3651432291666667" />
+          <ConnectorPoint PointX="3" PointY="3.3651432291666667" />
+        </AssociationConnector>
+        <AssociationConnector Association="FACSHAREDModel.FK__fac_hasta__h_ida__117F9D94" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="9.2833968098958337" />
+          <ConnectorPoint PointX="3" PointY="9.2833968098958337" />
+        </AssociationConnector>
+        <AssociationConnector Association="FACSHAREDModel.FK__fac_autor__t_usu__1367E606" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="2.8075716145833334" />
+          <ConnectorPoint PointX="3" PointY="2.8075716145833334" />
+        </AssociationConnector>
+        <AssociationConnector Association="FACSHAREDModel.FK__fac_ranki__r_usu__108B795B" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="4.9467863597756407" />
+          <ConnectorPoint PointX="2.5660744349011213" PointY="5.2628607946767616" />
+          <ConnectorPoint PointX="2.6839255650988791" PointY="5.38071192487452" />
+          <ConnectorPoint PointX="2.8125" PointY="5.5092863597756407" />
+          <ConnectorPoint PointX="2.8125" PointY="4.9375" />
+          <ConnectorPoint PointX="3" PointY="5.125" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
